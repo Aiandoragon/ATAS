@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Linq;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -29,13 +30,40 @@ namespace ATAS
         public void deleteRows(string table, DataGridView dgw)
         {
             string ids = _misc.getIdsForDelete(dgw);
-            deleteSQLRow(table,ids,"id");
+            deleteDefaultRow(table, ids);
+            /*if (_misc.checkTableNameSecondMaster(table))
+            {
+                
+                try
+                {
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка удаления из зависимой таблицы: ");
+                }
+                
+            }
+            else
+            {
+                string ids = _misc.getIdsForDelete(dgw);
+                deleteDefaultRow(table, ids);
+            }   */   
         }
 
-        public void deleteSQLRow(string table, string ids, string id)
+        public void deleteDefaultRow(string table, string ids)
         {
             openConnection();
-            string sqlreq = $"DELETE FROM {table} WHERE {id} in {ids}";
+            string sqlreq = $"DELETE FROM {table} WHERE id in {ids}";
+            SqlCommand command = new SqlCommand(sqlreq, getSqlConnection());
+            command.ExecuteNonQuery();
+            closeConnection();
+        }
+
+        public void deleteCustomRow(string table, string body)
+        {
+            openConnection();
+            string sqlreq = $"DELETE FROM {table} WHERE {body}";
             SqlCommand command = new SqlCommand(sqlreq, getSqlConnection());
             command.ExecuteNonQuery();
             closeConnection();
@@ -79,6 +107,12 @@ namespace ATAS
 
         public void refreshTable(DataGridView dgw, string tab)
         {
+            if (_misc.checkTableNameInTwoJoin(tab))
+            {
+                string connectionTable = _misc.getConnectingTableNameByTable(tab);
+                string connectionColumn = _misc.getConectionColumnNameByTableName(tab);
+                deleteCustomRow(tab,$"id not in (select {connectionColumn} from {connectionTable})");
+            }
             //определение переменных
             SqlDataReader reader;
             string sqlreq = $"select * from {tab}";
@@ -116,32 +150,25 @@ namespace ATAS
             }
             if (_misc.checkTableNameInTwoJoin(tab))
             {
-                //for (int i = 0; i < countRows; i++) dgw.Rows.Add();
                 if (tab == "tours")
                 {
-                    countRows = findTheOnlyOneRows(tab, "count(distinct unic_tour_id)");
-                    sqlreq = 
-                        $"select string_agg(M.id, ', '), M.unic_tour_id, M.name, " +
-                        $"string_agg(S.name, ', '), count_day, F.name, description " +
-                        $"from tours M join transport F on F.id = M.transport_id " +
-                        $"join hotel S on S.id = M.hotels_id " +
-                        $"group by M.unic_tour_id, M.name, count_day, F.name, description";
+                    sqlreq =
+                        $"select T.id, T.name, string_agg(H.name, ', '), count_day, Tr.name, description " +
+                        $"from Tours T join hotel_tours TH on T.id = TH.id_tour " +
+                        $"join Hotel H on TH.id_hotel = H.id " +
+                        $"join Transport Tr on Tr.id = T.transport_id " +
+                        $"group by T.id, T.name, count_day, Tr.name, description";
                 }
                 if (tab == "request")
                 {
-                    countRows = findTheOnlyOneRows(tab, "count(distinct unic_id)");
-                    sqlreq = 
-                        $"select STRING_AGG(R.id, ', '), unic_id, " +
-                        $"STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), " +
-                        $"T.name, R.start_date, R.finish_date, R.status " +
-                        $"from Request R join Client C on R.client_ids = C.id " +
-                        $"join Tours T on T.id = R.tour_id " +
-                        $"group by unic_id, T.name, R.start_date, R.finish_date, R.status";
+                    sqlreq =
+                        $"select R.id, STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), " +
+                        $"T.name, start_date, finish_date, status " +
+                        $"from Request R join client_request CR on R.id = CR.id_request " +
+                        $"join client C on C.id = CR.id_client " +
+                        $"join tours T on T.id = R.tour_id " +
+                        $"group by R.id, T.name, R.start_date, R.finish_date, R.status";
                 }
-                    //sqlreq = $"select id, name, string_agg(names, count_day, transport_name, descripion from tours M join ";
-                    //MessageBox.Show("шиш");
-                    /*$"join {firsttab} F on M.{firstidforeign} = F.{firstid} " +
-                    $"join {secondtable} S on M.{secondIdForeing} = S.{secondid}";*/
             }
             //заполнение таблицы
             for (int i = 0; i < countRows; i++) dgw.Rows.Add();
@@ -230,7 +257,15 @@ namespace ATAS
             int c = 0;
             while (reader.Read())
             {
-                c = Convert.ToInt16(reader["c"]);
+                try
+                {
+                    c = Convert.ToInt16(reader["c"]);
+                }
+                catch
+                {
+                    c = 0;
+                    break;
+                }
             }
             reader.Close();
             closeConnection();
@@ -360,6 +395,11 @@ namespace ATAS
             closeConnection();
             return Ids;
         }
+        //a = 3
+        //b = 5
+        //a = a + b
+        //b = a - b
+        //a = a - b
 
         public string getIdOnName(string table, string name)
         {
@@ -377,6 +417,23 @@ namespace ATAS
             reader.Close();
             closeConnection();
             return id;
+        }
+
+        public string getSQLrequest(string request)
+        {
+            string result = "";
+            SqlCommand command;
+            SqlDataReader reader;
+            command = new SqlCommand(request, getSqlConnection());
+            openConnection();
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                result = Convert.ToString(reader[0]);
+            }
+            reader.Close();
+            closeConnection();
+            return result;
         }
 
         public object getNameOnId(string table, string id)
@@ -591,27 +648,25 @@ namespace ATAS
                         $"where concat (H.id, H.name, C.name, H.price) like N'%{text}%'";
                     break;
                 case "request":
-                    sqlRequest = 
-                        $"select STRING_AGG(R.id, ', '), " +
-                        $"R.unic_id, STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), " +
-                        $"T.name, R.start_date, R.finish_date, R.status " +
-                        $"from Request R join Client C on R.client_ids = C.id " +
-                        $"join Tours T on T.id = R.tour_id " +
-                        $"group by unic_id, T.name, R.start_date, R.finish_date, R.status " +
-                        $"having concat (STRING_AGG(R.id, ', '), R.unic_id, " +
-                        $"STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), " +
-                        $"T.name, R.start_date, R.finish_date, R.status) like N'%{text}%'";
+                    sqlRequest =
+                        $"select R.id, STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), " +
+                        $"T.name, start_date, finish_date, status " +
+                        $"from Request R join client_request CR on R.id = CR.id_request " +
+                        $"join client C on C.id = CR.id_client " +
+                        $"join tours T on T.id = R.tour_id " +
+                        $"group by R.id, T.name, R.start_date, R.finish_date, R.status " +
+                        $"having concat(R.id, ' ', STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), ' ', " +
+                        $"T.name, ' ', start_date, ' ', finish_date, ' ', status) like N'%{text}%'";
                     break;
                 case "tours":
-                    sqlRequest = 
-                        $"select string_agg(M.id, ', '), M.unic_tour_id, M.name, " +
-                        $"string_agg(S.name, ', '), count_day, F.name, description " +
-                        $"from tours M join transport F on F.id = M.transport_id " +
-                        $"join hotel S on S.id = M.hotels_id " +
-                        $"group by M.unic_tour_id, M.name, count_day, F.name, description " +
-                        $"having concat (string_agg(M.id, ', '), M.unic_tour_id, M.name, " +
-                        $"string_agg(S.name, ', '), " +
-                        $"count_day, F.name, description) like N'%{text}%'";
+                    sqlRequest =
+                        $"select T.id, T.name, string_agg(H.name, ', '), count_day, Tr.name, description " +
+                        $"from Tours T join hotel_tours TH on T.id = TH.id_tour " +
+                        $"join Hotel H on TH.id_hotel = H.id " +
+                        $"join Transport Tr on Tr.id = T.transport_id " +
+                        $"group by T.id, T.name, count_day, Tr.name, description " +
+                        $"having concat (T.id, ' ', T.name, ' ', STRING_AGG(H.name, ', '), ' ', count_day, ' ', Tr.name, " +
+                        $"' ', description) like N'%{text}%'";
                     break;
                 case "transport":
                     sqlRequest = $"select * from transport where concat (id, name, price) like N'%{text}%'";
@@ -641,26 +696,24 @@ namespace ATAS
                         $"where concat (H.id, H.name, C.name, H.price) like N'%{text}%'";
                     break;
                 case "request":
-                    sqlRequestForCount = 
-                        $"select count(distinct unic_id) " +
-                        $"from Request R join Client C on R.client_ids = C.id " +
-                        $"join Tours T on T.id = R.tour_id " +
-                        $"group by unic_id, T.name, R.start_date, R.finish_date, R.status " +
-                        $"having concat (STRING_AGG(R.id, ', '), R.unic_id, " +
-                        $"STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), T.name, " +
-                        $"R.start_date, R.finish_date, R.status) " +
-                        $"like N'%{text}%'";
+                    sqlRequestForCount =
+                        $"select count(*) " +
+                        $"from Request R join client_request CR on R.id = CR.id_request " +
+                        $"join client C on C.id = CR.id_client " +
+                        $"join tours T on T.id = R.tour_id " +
+                        $"group by R.id, T.name, R.start_date, R.finish_date, R.status " +
+                        $"having concat(R.id, ' ', STRING_AGG(C.name + ' ' + C.surname + ', ' + C.passport, ' | '), ' ', " +
+                        $"T.name, ' ', start_date, ' ', finish_date, ' ', status) like N'%{text}%'";
                     break;
                 case "tours":
-                    sqlRequestForCount = 
-                        $"select count(distinct unic_tour_id) from tours M " +
-                        $"join transport F on F.id = M.transport_id " +
-                        $"join hotel S on S.id = M.hotels_id " +
-                        $"group by M.unic_tour_id, M.name, count_day, F.name, description " +
-                        $"having concat (string_agg(M.id, ', '), M.unic_tour_id, M.name, " +
-                        $"string_agg(S.name, ', '), " +
-                        $"count_day, F.name, description) " +
-                        $"like N'%{text}%'";
+                    sqlRequestForCount =
+                        $"select count(*) " +
+                        $"from Tours T join hotel_tours TH on T.id = TH.id_tour " +
+                        $"join Hotel H on TH.id_hotel = H.id " +
+                        $"join Transport Tr on Tr.id = T.transport_id " +
+                        $"group by T.id, T.name, count_day, Tr.name, description " +
+                        $"having concat (T.id, ' ', T.name, ' ', STRING_AGG(H.name, ', '), ' ', count_day, ' ', Tr.name, " +
+                        $"' ', description) like N'%{text}%'";
                     break;
                 case "transport":
                     sqlRequestForCount = 

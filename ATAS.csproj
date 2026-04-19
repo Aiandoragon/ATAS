@@ -65,17 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddRowTourForm.cs">
+    <Compile Include="TourForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddRowTourForm.Designer.cs">
-      <DependentUpon>AddRowTourForm.cs</DependentUpon>
+    <Compile Include="TourForm.Designer.cs">
+      <DependentUpon>TourForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddRowRequestForm.cs">
+    <Compile Include="RequestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddRowRequestForm.Designer.cs">
-      <DependentUpon>AddRowRequestForm.cs</DependentUpon>
+    <Compile Include="RequestForm.Designer.cs">
+      <DependentUpon>RequestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc.cs" />
     <Compile Include="DataBaseClass.cs" />
@@ -98,11 +98,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AddRowTourForm.resx">
-      <DependentUpon>AddRowTourForm.cs</DependentUpon>
+    <EmbeddedResource Include="TourForm.resx">
+      <DependentUpon>TourForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddRowRequestForm.resx">
-      <DependentUpon>AddRowRequestForm.cs</DependentUpon>
+    <EmbeddedResource Include="RequestForm.resx">
+      <DependentUpon>RequestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Deletecountries.resx">
       <DependentUpon>Deletecountries.cs</DependentUpon>

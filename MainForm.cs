@@ -303,7 +303,7 @@ namespace WindowsFormsApp1
         private List<string> tableNameForDataGridView = new List<string>
         {"city", "client", "hotel", "tours", "request", "countries", "transport"};
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             statusChangeWindow = "";
             tempReference = "";
@@ -313,7 +313,8 @@ namespace WindowsFormsApp1
                 try
                 { 
                     if (_misc.checkTableNameForComboBox(item))
-                        _db.setItemsforComboBoxColumn(getComboBoxColumnNameByTableName(item), _misc.getMasterTableNameByDependentTableName(item), "name");
+                        _db.setItemsforComboBoxColumn(getComboBoxColumnNameByTableName(item),
+                            _misc.getMasterTableNameByDependentTableName(item), "name");
                     _db.refreshTable(getDataGridViewByTableName(item), item);
                 }
                 catch (Exception ex)
@@ -339,12 +340,12 @@ namespace WindowsFormsApp1
                 {
                     case "tours":
                         statusChangeWindow = "add";
-                        new AddRowTourForm(this).ShowDialog();
+                        new TourForm(this).ShowDialog();
                         _db.refreshTable(dgw, tablename);
                         break;
                     case "request":
                         statusChangeWindow = "add";
-                        new AddRowRequestForm(this).ShowDialog();
+                        new RequestForm(this).ShowDialog();
                         _db.refreshTable(dgw, tablename);
                         break;
                     default:
@@ -445,7 +446,7 @@ namespace WindowsFormsApp1
         {
             DataGridView dgw = getDataGridViewByTabControlPage(MainTabControl.SelectedTab.Name);
             string tablename = _misc.getNameTableByTabControlPageName(MainTabControl.SelectedTab.Name);
-            //tempDGW = dgw;
+            tempDGW = dgw;
             if (dgw.Rows.Count == 0)
             {
                 MessageBox.Show("Нечего изменять");
@@ -461,15 +462,15 @@ namespace WindowsFormsApp1
                     switch (tablename)
                     {
                         case "tours":
-                            MessageBox.Show("В разработке");
+                            //MessageBox.Show("В разработке");
                             statusChangeWindow = "upd";
-                            new AddRowTourForm(this).ShowDialog();
-                            //_db.refreshTable(dgw, tablename);
+                            new TourForm(this).ShowDialog();
+                            _db.refreshTable(dgw, tablename);
                             break;
                         case "request":
                             statusChangeWindow = "upd";
-                            new AddRowRequestForm(this).ShowDialog();
-                            //_db.refreshTable(dgw, tablename);
+                            new RequestForm(this).ShowDialog();
+                            _db.refreshTable(dgw, tablename);
                             //MessageBox.Show("В разработке");
                             break;
                         default:

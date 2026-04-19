@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class AddRowRequestForm
+    partial class RequestForm
     {
         /// <summary>
         /// Required designer variable.
@@ -75,6 +75,7 @@
             this.dateTimePickerStartTour.Name = "dateTimePickerStartTour";
             this.dateTimePickerStartTour.Size = new System.Drawing.Size(269, 31);
             this.dateTimePickerStartTour.TabIndex = 5;
+            this.dateTimePickerStartTour.ValueChanged += new System.EventHandler(this.dateTimePickerStartTour_ValueChanged);
             // 
             // label1
             // 
@@ -157,6 +158,7 @@
             this.tourComboBox.Name = "tourComboBox";
             this.tourComboBox.Size = new System.Drawing.Size(183, 33);
             this.tourComboBox.TabIndex = 12;
+            this.tourComboBox.SelectedIndexChanged += new System.EventHandler(this.tourComboBox_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -172,6 +174,7 @@
             // dateTimePickerFinishTour
             // 
             this.dateTimePickerFinishTour.CustomFormat = "";
+            this.dateTimePickerFinishTour.Enabled = false;
             this.dateTimePickerFinishTour.Location = new System.Drawing.Point(558, 40);
             this.dateTimePickerFinishTour.Margin = new System.Windows.Forms.Padding(6);
             this.dateTimePickerFinishTour.Name = "dateTimePickerFinishTour";

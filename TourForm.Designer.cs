@@ -1,6 +1,6 @@
 ﻿namespace ATAS
 {
-    partial class AddRowTourForm
+    partial class TourForm
     {
         /// <summary>
         /// Required designer variable.

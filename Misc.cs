@@ -64,7 +64,7 @@ namespace ATAS
             string name = null;
             switch (tabname)
             {
-                case "tours":
+                case "Tours":
                     name = "hotel";
                     break;
                 case "request":
@@ -77,7 +77,73 @@ namespace ATAS
             return name;
         }
 
-        public string getForiegnColumnInMasterTableName(string tabname)
+        public string getDependentTableNameBySeondMasterTableName(string table)
+        {
+            string name = null;
+            switch (table)
+            {
+                case "hotel":
+                    name = "tours";
+                    break;
+                case "client":
+                    name = "request";
+                    break;
+                default:
+                    MessageBox.Show("Ошбика выбора зависимого города по названию главного(2) ");
+                    break;
+            }
+            return name;
+        }
+
+        public string getConnectingTableNameByTable(string table)
+        {
+            string name = null;
+            switch (table)
+            {
+                case "hotel":
+                    name = "hotel_tours";
+                    break;
+                case "client":
+                    name = "client_request";
+                    break;
+                case "tours":
+                    name = "hotel_tours";
+                    break;
+                case "request":
+                    name = "client_request";
+                    break;
+                default:
+                    MessageBox.Show("Ошбика выбора связующей таблицы по названию главного города(2) ");
+                    break;
+            }
+            return name;
+        }
+
+        public string getConectionColumnNameByTableName(string table)
+        {
+            string name = null;
+            switch (table)
+            {
+                case "hotel":
+                    name = "id_hotel";
+                    break;
+                case "tours":
+                    name = "id_tour";
+                    break;
+                case "request":
+                    name = "id_request";
+                    break;
+                case "client":
+                    name = "id_client";
+                    break;
+                default:
+                    MessageBox.Show("Ошбика выбора названия связующего столбца по названию главного города(2) ");
+                    break;
+            }
+            return name;
+        }
+
+        public string getForiegnColumnByMasterTableName(string tabname)
         {
             string name = null;
             switch (tabname)
@@ -121,6 +187,14 @@ namespace ATAS
         {
             List<string> names = new List<string>()
             {"tours", "request"};
+            if (names.FindIndex(x => x == name) == -1) return false;
+            else return true;
+        }
+
+        public bool checkTableNameSecondMaster(string name)
+        {
+            List<string> names = new List<string>()
+            {"hotel", "client"};
             if (names.FindIndex(x => x == name) == -1) return false;
             else return true;
         }
