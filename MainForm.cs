@@ -14,7 +14,7 @@ using System.Data.Common;
 using ATAS;
 using System.Diagnostics.Eventing.Reader;
 
-namespace WindowsFormsApp1
+namespace ATAS
 {
     
 
@@ -378,7 +378,7 @@ namespace WindowsFormsApp1
             changeEnd();
         }
 
-        private void aceptButton_Click(object sender, EventArgs e)
+        private void acсeptButton_Click(object sender, EventArgs e)
         {
             DataGridView dgw = getDataGridViewByTabControlPage(MainTabControl.SelectedTab.Name);
             string table = _misc.getNameTableByTabControlPageName(MainTabControl.SelectedTab.Name);

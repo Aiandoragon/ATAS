@@ -30,25 +30,7 @@ namespace ATAS
         public void deleteRows(string table, DataGridView dgw)
         {
             string ids = _misc.getIdsForDelete(dgw);
-            deleteDefaultRow(table, ids);
-            /*if (_misc.checkTableNameSecondMaster(table))
-            {
-                
-                try
-                {
-                    
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка удаления из зависимой таблицы: ");
-                }
-                
-            }
-            else
-            {
-                string ids = _misc.getIdsForDelete(dgw);
-                deleteDefaultRow(table, ids);
-            }   */   
+            deleteDefaultRow(table, ids); 
         }
 
         public void deleteDefaultRow(string table, string ids)
@@ -482,14 +464,6 @@ namespace ATAS
         public void selectChangedItemsAndUpdateThem (DataGridView dgw, string table, List<string> idsList)
         {
             string ids = _misc.shaklesString(_misc.convertListToString(idsList));
-            /*MessageBox.Show($"Ids = {ids}");
-            for (int i = 0; i < dgw.RowCount; i++)
-            {
-                for (int j = 1; j < dgw.ColumnCount - 1; j++)
-                {
-                    MessageBox.Show($"Значение ({i},{j}) = {dgw.Rows[i].Cells[j].Value}");
-                }
-            }*/
             int countRows = dgw.RowCount;
             int countColumns = dgw.ColumnCount - 1;
             List<string> columns = getColumnsFromTable(table);
@@ -542,7 +516,7 @@ namespace ATAS
                     }
                     body = body.Remove(body.Length - 2);
                     string id = dgw.Rows[i].Cells[0].Value.ToString();
-                    //MessageBox.Show($"update {table} set {body} where id = {dgw.Rows[i].Cells[0].Value.ToString()}");
+
                     updateTable(table, body, id);
                 }
                 else
@@ -610,7 +584,7 @@ namespace ATAS
                     values += "), ";
                 }
                 values = values.Remove(values.Length - 2);
-                MessageBox.Show($"insert into {table} {columnNames} values {values}");
+                //MessageBox.Show($"insert into {table} {columnNames} values {values}");
                 insertInTable(table, columnNames, values);
                 MessageBox.Show($"Таблица {table} изменена");
         }

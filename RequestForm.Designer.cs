@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace ATAS
 {
     partial class RequestForm
     {

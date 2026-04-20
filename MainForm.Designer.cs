@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace ATAS
 {
     partial class MainForm
     {
@@ -43,18 +43,8 @@
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.citypage = new System.Windows.Forms.TabPage();
             this.cityGridView = new System.Windows.Forms.DataGridView();
-            this.cityid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cityname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.citycountryname = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.deletecity = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.hotelpage = new System.Windows.Forms.TabPage();
             this.hotelGridView = new System.Windows.Forms.DataGridView();
-            this.hotelid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hotelname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hotelcityid = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.food = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.deletehotel = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.transportpage = new System.Windows.Forms.TabPage();
             this.transportGridView = new System.Windows.Forms.DataGridView();
             this.transportid = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -95,6 +85,16 @@
             this.contextSearchTextBox = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
             this.aceptButton = new System.Windows.Forms.Button();
+            this.cityid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cityname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.citycountryname = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.deletecity = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.hotelid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hotelname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hotelcityid = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.food = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deletehotel = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.mainmenustrip.SuspendLayout();
             this.countriespage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.countriesGridView)).BeginInit();
@@ -155,14 +155,15 @@
             // 
             // countriespage
             // 
+            this.countriespage.BackColor = System.Drawing.Color.Transparent;
             this.countriespage.Controls.Add(this.countriesGridView);
+            this.countriespage.ForeColor = System.Drawing.SystemColors.ControlText;
             this.countriespage.Location = new System.Drawing.Point(4, 33);
             this.countriespage.Name = "countriespage";
             this.countriespage.Padding = new System.Windows.Forms.Padding(3);
             this.countriespage.Size = new System.Drawing.Size(1097, 394);
             this.countriespage.TabIndex = 1;
             this.countriespage.Text = "Страны";
-            this.countriespage.UseVisualStyleBackColor = true;
             // 
             // countriesGridView
             // 
@@ -171,6 +172,7 @@
             this.countriesGridView.AllowUserToResizeColumns = false;
             this.countriesGridView.AllowUserToResizeRows = false;
             this.countriesGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.countriesGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.countriesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.countriesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.countryid,
@@ -180,9 +182,11 @@
             this.countriesGridView.Cursor = System.Windows.Forms.Cursors.Default;
             this.countriesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.countriesGridView.Location = new System.Drawing.Point(3, 3);
+            this.countriesGridView.MultiSelect = false;
             this.countriesGridView.Name = "countriesGridView";
             this.countriesGridView.ReadOnly = true;
             this.countriesGridView.RowHeadersVisible = false;
+            this.countriesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.countriesGridView.Size = new System.Drawing.Size(1091, 388);
             this.countriesGridView.TabIndex = 0;
             // 
@@ -198,14 +202,14 @@
             this.countryname.HeaderText = "Название Страны";
             this.countryname.Name = "countryname";
             this.countryname.ReadOnly = true;
-            this.countryname.Width = 178;
+            this.countryname.Width = 195;
             // 
             // countrycode
             // 
             this.countrycode.HeaderText = "Код Страны";
             this.countrycode.Name = "countrycode";
             this.countrycode.ReadOnly = true;
-            this.countrycode.Width = 131;
+            this.countrycode.Width = 143;
             // 
             // deletecountry
             // 
@@ -242,14 +246,18 @@
             this.citypage.Name = "citypage";
             this.citypage.Size = new System.Drawing.Size(1097, 394);
             this.citypage.TabIndex = 2;
-            this.citypage.Text = "города";
+            this.citypage.Text = "Города";
             this.citypage.UseVisualStyleBackColor = true;
             // 
             // cityGridView
             // 
             this.cityGridView.AllowUserToAddRows = false;
+            this.cityGridView.AllowUserToDeleteRows = false;
             this.cityGridView.AllowUserToResizeColumns = false;
             this.cityGridView.AllowUserToResizeRows = false;
+            this.cityGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cityGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.cityGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cityGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -257,44 +265,12 @@
             this.cityname,
             this.citycountryname,
             this.deletecity});
-            this.cityGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cityGridView.Location = new System.Drawing.Point(0, 0);
             this.cityGridView.Name = "cityGridView";
             this.cityGridView.ReadOnly = true;
             this.cityGridView.RowHeadersVisible = false;
             this.cityGridView.Size = new System.Drawing.Size(1097, 394);
             this.cityGridView.TabIndex = 0;
-            // 
-            // cityid
-            // 
-            this.cityid.HeaderText = "ID";
-            this.cityid.Name = "cityid";
-            this.cityid.ReadOnly = true;
-            this.cityid.Width = 52;
-            // 
-            // cityname
-            // 
-            this.cityname.HeaderText = "Название";
-            this.cityname.Name = "cityname";
-            this.cityname.ReadOnly = true;
-            this.cityname.Width = 122;
-            // 
-            // citycountryname
-            // 
-            this.citycountryname.HeaderText = "Страна";
-            this.citycountryname.Name = "citycountryname";
-            this.citycountryname.ReadOnly = true;
-            this.citycountryname.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.citycountryname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // deletecity
-            // 
-            this.deletecity.HeaderText = "Удалить";
-            this.deletecity.Name = "deletecity";
-            this.deletecity.ReadOnly = true;
-            this.deletecity.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.deletecity.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.deletecity.Visible = false;
             // 
             // hotelpage
             // 
@@ -303,12 +279,15 @@
             this.hotelpage.Name = "hotelpage";
             this.hotelpage.Size = new System.Drawing.Size(1097, 394);
             this.hotelpage.TabIndex = 3;
-            this.hotelpage.Text = "отели";
+            this.hotelpage.Text = "Отели";
             this.hotelpage.UseVisualStyleBackColor = true;
             // 
             // hotelGridView
             // 
             this.hotelGridView.AllowUserToAddRows = false;
+            this.hotelGridView.AllowUserToDeleteRows = false;
+            this.hotelGridView.AllowUserToResizeColumns = false;
+            this.hotelGridView.AllowUserToResizeRows = false;
             this.hotelGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.hotelGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.hotelGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -320,60 +299,13 @@
             this.deletehotel});
             this.hotelGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hotelGridView.Location = new System.Drawing.Point(0, 0);
+            this.hotelGridView.MultiSelect = false;
             this.hotelGridView.Name = "hotelGridView";
             this.hotelGridView.ReadOnly = true;
             this.hotelGridView.RowHeadersVisible = false;
+            this.hotelGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.hotelGridView.Size = new System.Drawing.Size(1097, 394);
             this.hotelGridView.TabIndex = 0;
-            // 
-            // hotelid
-            // 
-            this.hotelid.HeaderText = "id";
-            this.hotelid.Name = "hotelid";
-            this.hotelid.ReadOnly = true;
-            this.hotelid.Width = 50;
-            // 
-            // hotelname
-            // 
-            this.hotelname.HeaderText = "Название отеля";
-            this.hotelname.Name = "hotelname";
-            this.hotelname.ReadOnly = true;
-            this.hotelname.Width = 163;
-            // 
-            // hotelcityid
-            // 
-            this.hotelcityid.HeaderText = "Назваие города";
-            this.hotelcityid.Name = "hotelcityid";
-            this.hotelcityid.ReadOnly = true;
-            this.hotelcityid.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.hotelcityid.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.hotelcityid.Width = 164;
-            // 
-            // food
-            // 
-            this.food.HeaderText = "Еда";
-            this.food.Name = "food";
-            this.food.ReadOnly = true;
-            this.food.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.food.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.food.Width = 70;
-            // 
-            // price
-            // 
-            this.price.HeaderText = "Цена";
-            this.price.Name = "price";
-            this.price.ReadOnly = true;
-            this.price.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.price.Width = 79;
-            // 
-            // deletehotel
-            // 
-            this.deletehotel.HeaderText = "Удалить";
-            this.deletehotel.Name = "deletehotel";
-            this.deletehotel.ReadOnly = true;
-            this.deletehotel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.deletehotel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.deletehotel.Visible = false;
             // 
             // transportpage
             // 
@@ -382,7 +314,7 @@
             this.transportpage.Name = "transportpage";
             this.transportpage.Size = new System.Drawing.Size(1097, 394);
             this.transportpage.TabIndex = 4;
-            this.transportpage.Text = "транспорт";
+            this.transportpage.Text = "Транспорт";
             this.transportpage.UseVisualStyleBackColor = true;
             // 
             // transportGridView
@@ -440,7 +372,7 @@
             this.tourpage.Name = "tourpage";
             this.tourpage.Size = new System.Drawing.Size(1097, 394);
             this.tourpage.TabIndex = 5;
-            this.tourpage.Text = "туры";
+            this.tourpage.Text = "Туры";
             this.tourpage.UseVisualStyleBackColor = true;
             // 
             // tourGridView
@@ -527,7 +459,7 @@
             this.clientpage.Name = "clientpage";
             this.clientpage.Size = new System.Drawing.Size(1097, 394);
             this.clientpage.TabIndex = 6;
-            this.clientpage.Text = "клиенты";
+            this.clientpage.Text = "Клиенты";
             this.clientpage.UseVisualStyleBackColor = true;
             // 
             // clientGridView
@@ -586,21 +518,21 @@
             this.clientbirthday.HeaderText = "День рожденья";
             this.clientbirthday.Name = "clientbirthday";
             this.clientbirthday.ReadOnly = true;
-            this.clientbirthday.Width = 162;
+            this.clientbirthday.Width = 178;
             // 
             // clientpassport
             // 
             this.clientpassport.HeaderText = "Серия и номер";
             this.clientpassport.Name = "clientpassport";
             this.clientpassport.ReadOnly = true;
-            this.clientpassport.Width = 154;
+            this.clientpassport.Width = 169;
             // 
             // clientphone
             // 
             this.clientphone.HeaderText = "Номер телефона";
             this.clientphone.Name = "clientphone";
             this.clientphone.ReadOnly = true;
-            this.clientphone.Width = 170;
+            this.clientphone.Width = 187;
             // 
             // clintemail
             // 
@@ -623,7 +555,7 @@
             this.requestpage.Name = "requestpage";
             this.requestpage.Size = new System.Drawing.Size(1097, 394);
             this.requestpage.TabIndex = 7;
-            this.requestpage.Text = "заявки";
+            this.requestpage.Text = "Заявки";
             this.requestpage.UseVisualStyleBackColor = true;
             // 
             // requestGridView
@@ -663,7 +595,7 @@
             this.requestclirntid.HeaderText = "Краткая информация о клиенте";
             this.requestclirntid.Name = "requestclirntid";
             this.requestclirntid.ReadOnly = true;
-            this.requestclirntid.Width = 289;
+            this.requestclirntid.Width = 319;
             // 
             // requesttourid
             // 
@@ -672,21 +604,21 @@
             this.requesttourid.ReadOnly = true;
             this.requesttourid.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.requesttourid.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.requesttourid.Width = 152;
+            this.requesttourid.Width = 167;
             // 
             // requetstartdate
             // 
             this.requetstartdate.HeaderText = "Дата начала";
             this.requetstartdate.Name = "requetstartdate";
             this.requetstartdate.ReadOnly = true;
-            this.requetstartdate.Width = 133;
+            this.requetstartdate.Width = 145;
             // 
             // requestfinishdate
             // 
             this.requestfinishdate.HeaderText = "Конец Тура";
             this.requestfinishdate.Name = "requestfinishdate";
             this.requestfinishdate.ReadOnly = true;
-            this.requestfinishdate.Width = 126;
+            this.requestfinishdate.Width = 138;
             // 
             // status
             // 
@@ -699,7 +631,7 @@
             "5"});
             this.status.Name = "status";
             this.status.ReadOnly = true;
-            this.status.Width = 130;
+            this.status.Width = 144;
             // 
             // deleterequest
             // 
@@ -713,6 +645,7 @@
             // 
             // MainLaypoutPanel
             // 
+            this.MainLaypoutPanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.MainLaypoutPanel.ColumnCount = 1;
             this.MainLaypoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MainLaypoutPanel.Controls.Add(this.MainTabControl, 0, 0);
@@ -723,11 +656,12 @@
             this.MainLaypoutPanel.RowCount = 2;
             this.MainLaypoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainLaypoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MainLaypoutPanel.Size = new System.Drawing.Size(954, 488);
+            this.MainLaypoutPanel.Size = new System.Drawing.Size(1050, 488);
             this.MainLaypoutPanel.TabIndex = 1;
             // 
             // changePanel
             // 
+            this.changePanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.changePanel.Controls.Add(this.contextSearchTextBox);
             this.changePanel.Controls.Add(this.cancelButton);
             this.changePanel.Controls.Add(this.aceptButton);
@@ -748,33 +682,123 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.BackColor = System.Drawing.SystemColors.Control;
             this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cancelButton.ForeColor = System.Drawing.SystemColors.ControlText;
             this.cancelButton.Location = new System.Drawing.Point(153, 6);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(147, 33);
             this.cancelButton.TabIndex = 1;
             this.cancelButton.Text = "Отмена";
-            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.UseVisualStyleBackColor = false;
             this.cancelButton.Visible = false;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // aceptButton
             // 
+            this.aceptButton.BackColor = System.Drawing.SystemColors.Control;
             this.aceptButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.aceptButton.ForeColor = System.Drawing.SystemColors.ControlText;
             this.aceptButton.Location = new System.Drawing.Point(4, 6);
             this.aceptButton.Name = "aceptButton";
             this.aceptButton.Size = new System.Drawing.Size(143, 33);
             this.aceptButton.TabIndex = 0;
             this.aceptButton.Text = "Подтвердить";
-            this.aceptButton.UseVisualStyleBackColor = true;
+            this.aceptButton.UseVisualStyleBackColor = false;
             this.aceptButton.Visible = false;
-            this.aceptButton.Click += new System.EventHandler(this.aceptButton_Click);
+            this.aceptButton.Click += new System.EventHandler(this.acсeptButton_Click);
+            // 
+            // cityid
+            // 
+            this.cityid.HeaderText = "ID";
+            this.cityid.Name = "cityid";
+            this.cityid.ReadOnly = true;
+            this.cityid.Width = 52;
+            // 
+            // cityname
+            // 
+            this.cityname.HeaderText = "Название";
+            this.cityname.Name = "cityname";
+            this.cityname.ReadOnly = true;
+            this.cityname.Width = 122;
+            // 
+            // citycountryname
+            // 
+            this.citycountryname.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.citycountryname.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.citycountryname.HeaderText = "Страна";
+            this.citycountryname.MinimumWidth = 10;
+            this.citycountryname.Name = "citycountryname";
+            this.citycountryname.ReadOnly = true;
+            this.citycountryname.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.citycountryname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // deletecity
+            // 
+            this.deletecity.HeaderText = "Удалить";
+            this.deletecity.Name = "deletecity";
+            this.deletecity.ReadOnly = true;
+            this.deletecity.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.deletecity.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.deletecity.Visible = false;
+            this.deletecity.Width = 111;
+            // 
+            // hotelid
+            // 
+            this.hotelid.HeaderText = "ID";
+            this.hotelid.Name = "hotelid";
+            this.hotelid.ReadOnly = true;
+            this.hotelid.Width = 52;
+            // 
+            // hotelname
+            // 
+            this.hotelname.HeaderText = "Название отеля";
+            this.hotelname.Name = "hotelname";
+            this.hotelname.ReadOnly = true;
+            this.hotelname.Width = 179;
+            // 
+            // hotelcityid
+            // 
+            this.hotelcityid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.hotelcityid.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.hotelcityid.HeaderText = "Назваие города";
+            this.hotelcityid.Name = "hotelcityid";
+            this.hotelcityid.ReadOnly = true;
+            this.hotelcityid.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.hotelcityid.Width = 180;
+            // 
+            // food
+            // 
+            this.food.HeaderText = "Еда";
+            this.food.Name = "food";
+            this.food.ReadOnly = true;
+            this.food.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.food.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.food.Width = 70;
+            // 
+            // price
+            // 
+            this.price.HeaderText = "Цена";
+            this.price.Name = "price";
+            this.price.ReadOnly = true;
+            this.price.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.price.Width = 79;
+            // 
+            // deletehotel
+            // 
+            this.deletehotel.HeaderText = "Удалить";
+            this.deletehotel.Name = "deletehotel";
+            this.deletehotel.ReadOnly = true;
+            this.deletehotel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.deletehotel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.deletehotel.Visible = false;
+            this.deletehotel.Width = 111;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 488);
+            this.ClientSize = new System.Drawing.Size(1050, 488);
             this.ContextMenuStrip = this.mainmenustrip;
             this.Controls.Add(this.MainLaypoutPanel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -845,16 +869,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clientphone;
         private System.Windows.Forms.DataGridViewTextBoxColumn clintemail;
         private System.Windows.Forms.DataGridViewCheckBoxColumn deleteclient;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cityid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cityname;
-        private System.Windows.Forms.DataGridViewComboBoxColumn citycountryname;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn deletecity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hotelid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hotelname;
-        private System.Windows.Forms.DataGridViewComboBoxColumn hotelcityid;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn food;
-        private System.Windows.Forms.DataGridViewTextBoxColumn price;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn deletehotel;
         private System.Windows.Forms.ToolStripMenuItem changeToolStripMenuItem;
         internal System.Windows.Forms.TabControl MainTabControl;
         private System.Windows.Forms.TextBox contextSearchTextBox;
@@ -872,6 +886,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn requestfinishdate;
         private System.Windows.Forms.DataGridViewComboBoxColumn status;
         private System.Windows.Forms.DataGridViewCheckBoxColumn deleterequest;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cityid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cityname;
+        private System.Windows.Forms.DataGridViewComboBoxColumn citycountryname;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn deletecity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hotelid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hotelname;
+        private System.Windows.Forms.DataGridViewComboBoxColumn hotelcityid;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn food;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn deletehotel;
     }
 }
 
